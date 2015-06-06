@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #region
+  specs-service-core
+  %%
+  Copyright (C) 2013 - 2015 Etilize
+  %%
+  NOTICE: All information contained herein is, and remains the property of ETILIZE.
+  The intellectual and technical concepts contained herein are proprietary to
+  ETILIZE and may be covered by U.S. and Foreign Patents, patents in process, and
+  are protected by trade secret or copyright law. Dissemination of this information
+  or reproduction of this material is strictly forbidden unless prior written
+  permission is obtained from ETILIZE. Access to the source code contained herein
+  is hereby forbidden to anyone except current ETILIZE employees, managers or
+  contractors who have executed Confidentiality and Non-disclosure agreements
+  explicitly covering such access.
+  
+  The copyright notice above does not evidence any actual or intended publication
+  or disclosure of this source code, which includes information that is confidential
+  and/or proprietary, and is a trade secret, of ETILIZE. ANY REPRODUCTION, MODIFICATION,
+  DISTRIBUTION, PUBLIC PERFORMANCE, OR PUBLIC DISPLAY OF OR THROUGH USE OF THIS
+  SOURCE CODE WITHOUT THE EXPRESS WRITTEN CONSENT OF ETILIZE IS STRICTLY PROHIBITED,
+  AND IN VIOLATION OF APPLICABLE LAWS AND INTERNATIONAL TREATIES. THE RECEIPT
+  OR POSSESSION OF THIS SOURCE CODE AND/OR RELATED INFORMATION DOES NOT CONVEY OR
+  IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO
+  MANUFACTURE, USE, OR SELL ANYTHING THAT IT MAY DESCRIBE, IN WHOLE OR IN PART.
+  #endregion
+  -->
+
+<dataset>
+    <product productid="1" manufacturerid="1" isactive="1" categoryid="1" mfgpartno="ABC#123"/>
+    <product productid="2" manufacturerid="2" isactive="1" categoryid="2" mfgpartno="ABC#456"/>
+    <product productid="3" manufacturerid="3" isactive="1" categoryid="3" mfgpartno="ABC#789"/>
+
+    <productlanguage productlanguageid="1" productid="1" isactive="1" languageid="1" productstatusid="6"/>
+    <productlanguage productlanguageid="2" productid="1" isactive="1" languageid="2" productstatusid="6"/>
+    <productlanguage productlanguageid="3" productid="2" isactive="1" languageid="3" productstatusid="6"/>
+    <productlanguage productlanguageid="4" productid="2" isactive="1" languageid="1" productstatusid="1"/>
+    <productlanguage productlanguageid="5" productid="3" isactive="1" languageid="1" productstatusid="6"/>
+
+    <productparameter productparameterid="1" productid="1" parameterid="111" setnumber="0" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit1" valueid="1"/>
+    <productparameter productparameterid="2" productid="1" parameterid="111" setnumber="1" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="" valueid="2"/>
+    <productparameter productparameterid="3" productid="1" parameterid="111" setnumber="0" exceptioncodeid="3" isactive="1" languageid="1" unitvalue="" valueid="3"/>
+    <productparameter productparameterid="4" productid="1" parameterid="111" setnumber="0" exceptioncodeid="2" isactive="1" languageid="2" unitvalue="unit4" valueid="4"/>
+    <productparameter productparameterid="5" productid="1" parameterid="112" setnumber="0" exceptioncodeid="2" isactive="1" languageid="2" unitvalue="" valueid="5"/>
+    <productparameter productparameterid="6" productid="2" parameterid="111" setnumber="0" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit2" valueid="2"/>
+    <productparameter productparameterid="7" productid="3" parameterid="111" setnumber="0" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit3" valueid="3"/>
+
+    <parametervalue valueid="1" value="Value 1" isactive="1"/>
+    <parametervalue valueid="2" value="Value 2" isactive="1"/>
+    <parametervalue valueid="3" value="Value 3" isactive="1"/>
+    <parametervalue valueid="4" value="Value 4" isactive="1"/>
+    <parametervalue valueid="5" value="Value 5" isactive="1"/>
+</dataset>

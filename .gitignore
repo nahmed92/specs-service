@@ -19,3 +19,4 @@ coverage/
 dist/
 bin/
 target/
+logs/

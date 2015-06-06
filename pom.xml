@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.etilize.build</groupId>
+        <artifactId>etilize-build</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.etilize.product.specs</groupId>
+    <artifactId>specs-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Specs Service</name>
+    <description>Specs Micro Service that is used to get the specifications for products from conQuire</description>
+    <inceptionYear>2015</inceptionYear>
+
+    <scm>
+        <url>http://git.etilizepak.com/etilize/specs-service</url>
+        <connection>scm:git:git://git.etilizepak.com/etilize/specs-service.git</connection>
+        <developerConnection>scm:git:ssh://git.etilizepak.com/etilize/specs-service.git</developerConnection>
+    </scm>
+
+    <modules>
+        <module>core</module>
+        <module>client</module>
+    </modules>
+
+</project>
