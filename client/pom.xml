@@ -5,6 +5,7 @@
         <groupId>com.etilize.build</groupId>
         <artifactId>etilize-build</artifactId>
         <version>0.0.2-SNAPSHOT</version>
+        <relativePath />
     </parent>
 
     <groupId>com.etilize.product.specs</groupId>
@@ -26,7 +27,7 @@
         <dependency>
             <groupId>com.damnhandy</groupId>
             <artifactId>handy-uri-templates</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.3-SNAPSHOT</version>
         </dependency>
         <!-- test dependencies -->
         <dependency>
