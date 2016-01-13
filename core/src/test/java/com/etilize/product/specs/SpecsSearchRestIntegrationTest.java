@@ -90,4 +90,20 @@ public class SpecsSearchRestIntegrationTest extends AbstractIntegrationTest {
                 .param("productIds", "1")) //
         .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void shouldFindAllProductIdByDateRangeAndTemplateId() throws Exception {
+        mockMvc.perform(get("/specs/search/findProductItemByDateRangeAndTemplateId") //
+        .param("startDate", "2015-08-03") //
+        .param("endDate", "2015-12-02") //
+        .param("templateId", "1")) //
+        .andExpect(status().isOk()) //
+        .andExpect(jsonPath("$.[*]", hasSize(2))) //
+        .andExpect(jsonPath("$.[0].productId", is(1))) //
+        .andExpect(jsonPath("$.[0].productParameters", hasSize(4))) //
+        .andExpect(jsonPath("$.[1].productId", is(2))) //
+        .andExpect(jsonPath("$.[1].productParameters", hasSize(1))) //
+        .andExpect(jsonPath("$.[1].productParameters.parameterId[0]", is(115)));
+
+    }
 }

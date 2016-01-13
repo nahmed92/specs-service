@@ -37,6 +37,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Links;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,12 @@ public class SpecsSearchController extends AbstractRepositoryRestController {
 
     static final String PARAM_PARAMETER_ID = "parameterId";
 
+    static final String PARAM_TEMPLATE_ID = "templateId";
+
+    static final String PARAM_FROM_DATE = "startDate";
+
+    static final String PARAM_TO_DATE = "endDate";
+
     private final SpecsRepository repo;
 
     private final SpecsLinks specsLinks;
@@ -80,9 +87,16 @@ public class SpecsSearchController extends AbstractRepositoryRestController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResourceSupport listSearches() {
-        final Links links = new Links(specsLinks.linkFor(this.getClass(),
+        final Link findProductByParameterIdswithPublishStatusLink = specsLinks.linkFor(
+                this.getClass(),
                 REL_FIND_ALL_BY_PRODUCT_IDS_AND_PARAMETER_ID_WITH_PUBLISHED_STATUS,
-                PARAM_PRODUCT_IDS, PARAM_PARAMETER_ID));
+                PARAM_PRODUCT_IDS, PARAM_PARAMETER_ID);
+        final Link findProductItemByDateRangeAndTemplateId = specsLinks.linkFor(
+                this.getClass(), REL_FIND_PRODUCT_ITEM_BY_DATE_RANGE_AND_TEMPLATE_ID,
+                PARAM_FROM_DATE, PARAM_TO_DATE, PARAM_TEMPLATE_ID);
+        final Links links = new Links(findProductByParameterIdswithPublishStatusLink,
+                findProductItemByDateRangeAndTemplateId);
+
         final ResourceSupport result = new ResourceSupport();
         result.add(links);
 
@@ -111,4 +125,30 @@ public class SpecsSearchController extends AbstractRepositoryRestController {
 
         return new ResponseEntity<List<Specs>>(specs, HttpStatus.OK);
     }
+
+    /**
+     * <code>GET /specs/search/findProductItemByDateRangeAndTemplateId</code> - returns
+     * the specs for passed in productIds and parameterId
+     *
+     * @param startDate must not be {@literal null} or empty
+     * @param endDate must not be {@literal null}
+     * @param templateId must not be {@literal null}
+     * @return the {@link List} of {@link ProductItem} which matches the given productIds
+     *         and parameterId
+     */
+    @RequestMapping(value = "/" + REL_FIND_PRODUCT_ITEM_BY_DATE_RANGE_AND_TEMPLATE_ID, method = RequestMethod.GET)
+    public ResponseEntity<List<ProductItem>> findProductItemByDateRangeAndTemplateId(
+            @RequestParam(PARAM_FROM_DATE) final String startDate,
+            @RequestParam(PARAM_TO_DATE) final String endDate,
+            @RequestParam(PARAM_TEMPLATE_ID) final Integer templateId) {
+        Assert.hasText(startDate);
+        Assert.hasText(endDate);
+        Assert.notNull(templateId);
+
+        final List<ProductItem> productItems = repo.findProductItemByDateRangeAndTemplateId(
+                startDate, endDate, templateId);
+
+        return new ResponseEntity<List<ProductItem>>(productItems, HttpStatus.OK);
+    }
+
 }
