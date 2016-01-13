@@ -81,5 +81,4 @@ public class ProductItem {
         .append("Parameters Count", getProductParameters().size()) //
         .toString();
     }
-
 }

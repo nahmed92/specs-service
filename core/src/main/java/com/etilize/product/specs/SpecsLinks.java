@@ -54,7 +54,7 @@ public class SpecsLinks {
 
     static final String REL_FIND_ALL_BY_PRODUCT_IDS_AND_PARAMETER_ID_WITH_PUBLISHED_STATUS = "findAllByProductIdsAndParameterIdWithPublishedStatus";
 
-    static final String REL_FIND_PRODUCT_ITEM_BY_DATE_RANGE_AND_TEMPLATE_ID = "findProductItemByDateRangeAndTemplateId";
+    static final String REL_FIND_PRODUCTITEM_BY_DATE_RANGE_CATEGORYID_AND_TEMPLATEID = "findProductItemByDateRangeCategoryIdAndTemplateId";
 
     /**
      * Returns the search link

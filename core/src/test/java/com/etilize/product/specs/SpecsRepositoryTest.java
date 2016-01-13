@@ -69,9 +69,8 @@ public class SpecsRepositoryTest extends AbstractIntegrationTest {
     @Test
     public void shouldFindProductItemByDateRangeAndTemplateId() {
 
-        final List<ProductItem> productItems = repo.findProductItemByDateRangeAndTemplateId(
-                "2015-08-03", "2015-12-02", 1);
-
+        final List<ProductItem> productItems = repo.findProductItemByDateRangeCategoryIdAndTemplateId(
+                "2015-08-03", "2015-12-02", 1, 1);
         assertThat(productItems, is(notNullValue()));
         assertThat(productItems, hasSize(2));
 

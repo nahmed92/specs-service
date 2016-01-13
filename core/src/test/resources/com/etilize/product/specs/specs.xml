@@ -41,20 +41,34 @@
     <template templateid="5" categoryid="1" name="notebooks" templatetypeid="32" isactive="1" />
 
     <templateheader templateheaderid="993" templateid="1" headerid="52" isactive="1"/>
-
     <header headerid="52" name="memory" isactive="1"/>
-
-    <templateattribute templateattributeid="3086" templateheaderid="993" attributeid="1867" atrparamdefid="2657" isactive="1"/>
-
+    <templateattribute templateattributeid="3086" templateheaderid="993" attributeid="1867" atrparamdefid="2657" isdeprecated="0" isactive="1"/>
     <attribute attributeid="1867" name="standard memory" isactive="1"/>
+    <atrparamdef atrparamdefid="2657" attributeid="1867" name="standard memory: notebooks" languageid="1" isactive="1"/>
 
-    <atrparamdef atrparamdefid="2657" attributeid="1867" name="standard memory: notebooks" isactive="1"/>
+    <atrparamdefcomp atrparamdefcompid="11" atrparamdefid="2657" parameterid="111" isactive="1"/>
+    <atrparamdefcomp atrparamdefcompid="12" atrparamdefid="2657" parameterid="112" isactive="1"/>
+    <atrparamdefcomp atrparamdefcompid="13" atrparamdefid="2657" parameterid="113" isactive="1"/>
+    <atrparamdefcomp atrparamdefcompid="14" atrparamdefid="2657" parameterid="114" isactive="1"/>
+    <atrparamdefcomp atrparamdefcompid="15" atrparamdefid="2657" parameterid="115" isactive="1"/>
+    <atrparamdefcomp atrparamdefcompid="16" atrparamdefid="2657" parameterid="116" isactive="1"/>
+    <atrparamdefcomp atrparamdefcompid="17" atrparamdefid="2657" parameterid="117" isactive="1"/>
 
-    <atrparamdefcomp atrparamdefcompid="15258" atrparamdefid="2657" parameterid="21996" isactive="1"/>
+    <parameter parameterid="111" name="memory capacity" datatypeid="3" isactive="1"/>
+    <parameter parameterid="112" name="memory capacity" datatypeid="3" isactive="1"/>
+    <parameter parameterid="113" name="memory capacity" datatypeid="3" isactive="1"/>
+    <parameter parameterid="114" name="memory capacity" datatypeid="3" isactive="1"/>
+    <parameter parameterid="115" name="memory capacity" datatypeid="3" isactive="1"/>
+    <parameter parameterid="116" name="memory capacity" datatypeid="3" isactive="1"/>
+    <parameter parameterid="117" name="memory capacity" datatypeid="3" isactive="1"/>
 
-    <parameter parameterid="21996" name="memory capacity" datatypeid="3" isactive="1"/>
-
-    <categoryparameter categoryparameterid="58609" categoryid="1" parameterid="21996" unitgroupid="125237" isactive="1"/>
+    <categoryparameter categoryparameterid="11" categoryid="1" parameterid="111" unitgroupid="125237" isactive="1"/>
+    <categoryparameter categoryparameterid="12" categoryid="1" parameterid="112" unitgroupid="125237" isactive="1"/>
+    <categoryparameter categoryparameterid="13" categoryid="1" parameterid="113" unitgroupid="125237" isactive="1"/>
+    <categoryparameter categoryparameterid="14" categoryid="1" parameterid="114" unitgroupid="125237" isactive="1"/>
+    <categoryparameter categoryparameterid="15" categoryid="1" parameterid="115" unitgroupid="125237" isactive="1"/>
+    <categoryparameter categoryparameterid="16" categoryid="1" parameterid="116" unitgroupid="125237" isactive="1"/>
+    <categoryparameter categoryparameterid="17" categoryid="1" parameterid="117" unitgroupid="125237" isactive="1"/>
 
     <product productid="1" manufacturerid="1" isactive="1" categoryid="1" mfgpartno="ABC#123"/>
     <product productid="2" manufacturerid="2" isactive="1" categoryid="1" mfgpartno="ABC#456"/>
@@ -70,24 +84,24 @@
     <productlanguage productlanguageid="8" productid="8" isactive="1" languageid="1" productstatusid="6"/>
     <productlanguage productlanguageid="9" productid="9" isactive="1" languageid="1" productstatusid="6"/>
 
-    <productparameter productparameterid="1" productid="1" parameterid="111" setnumber="0" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit1" valueid="1"/>
-    <productparameter productparameterid="2" productid="1" parameterid="111" setnumber="1" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="" valueid="2"/>
-    <productparameter productparameterid="3" productid="1" parameterid="112" setnumber="2" exceptioncodeid="3" isactive="1" languageid="1" unitvalue="unit3" valueid="3"/>
-    <productparameter productparameterid="4" productid="1" parameterid="113" setnumber="3" exceptioncodeid="2" isactive="1" languageid="2" unitvalue="unit4" valueid="4"/>
-    <productparameter productparameterid="5" productid="5" parameterid="114" setnumber="4" exceptioncodeid="2" isactive="1" languageid="2" unitvalue="" valueid="5"/>
-    <productparameter productparameterid="6" productid="2" parameterid="115" setnumber="1" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit2" valueid="2"/>
-    <productparameter productparameterid="7" productid="3" parameterid="111" setnumber="2" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit3" valueid="3"/>
-    <productparameter productparameterid="8" productid="8" parameterid="116" setnumber="3" exceptioncodeid="3" isactive="1" languageid="1" unitvalue="unit8" valueid="8"/>
-    <productparameter productparameterid="9" productid="9" parameterid="117" setnumber="0" exceptioncodeid="3" isactive="1" languageid="1" unitvalue="unit8" valueid="8"/>
+    <productparameter productparameterid="1" productid="1" parameterid="111" categoryid="1" setnumber="0" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit1" valueid="1"/>
+    <productparameter productparameterid="2" productid="1" parameterid="111" categoryid="1" setnumber="1" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="" valueid="2"/>
+    <productparameter productparameterid="3" productid="1" parameterid="112" categoryid="1" setnumber="2" exceptioncodeid="3" isactive="1" languageid="1" unitvalue="unit3" valueid="3"/>
+    <productparameter productparameterid="4" productid="1" parameterid="113" categoryid="1" setnumber="3" exceptioncodeid="2" isactive="1" languageid="2" unitvalue="unit4" valueid="4"/>
+    <productparameter productparameterid="5" productid="5" parameterid="114" categoryid="1" setnumber="4" exceptioncodeid="2" isactive="1" languageid="2" unitvalue="" valueid="5"/>
+    <productparameter productparameterid="6" productid="2" parameterid="115" categoryid="1" setnumber="1" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit2" valueid="2"/>
+    <productparameter productparameterid="7" productid="3" parameterid="111" categoryid="1" setnumber="2" exceptioncodeid="2" isactive="1" languageid="1" unitvalue="unit3" valueid="3"/>
+    <productparameter productparameterid="8" productid="8" parameterid="116" categoryid="1" setnumber="3" exceptioncodeid="3" isactive="1" languageid="1" unitvalue="unit8" valueid="8"/>
+    <productparameter productparameterid="9" productid="9" parameterid="117" categoryid="1" setnumber="0" exceptioncodeid="3" isactive="1" languageid="1" unitvalue="unit8" valueid="8"/>
 
-    <productstatushistory productstatushistoryid="1" productid="1" isactive="1" timestamp="2015-08-03 00:00:00" productstatusid="6" languageid="1"/>
-    <productstatushistory productstatushistoryid="2" productid="2" isactive="1" timestamp="2015-08-03 00:00:00" productstatusid="6" languageid="1"/>
-    <productstatushistory productstatushistoryid="3" productid="3" isactive="1" timestamp="2015-12-02 23:59:59" productstatusid="6" languageid="3"/>
-    <productstatushistory productstatushistoryid="4" productid="4" isactive="1" timestamp="2015-08-03 00:00:00" productstatusid="6" languageid="1"/>
-    <productstatushistory productstatushistoryid="5" productid="5" isactive="1" timestamp="2014-08-03 00:00:00" productstatusid="6" languageid="1"/>
-    <productstatushistory productstatushistoryid="6" productid="2" isactive="1" timestamp="2013-08-03 00:00:00" productstatusid="6" languageid="1"/>
-    <productstatushistory productstatushistoryid="8" productid="8" isactive="1" timestamp="2015-03-03 00:00:00" productstatusid="6" languageid="1"/>
-    <productstatushistory productstatushistoryid="9" productid="9" isactive="1" timestamp="2013-11-03 00:00:00" productstatusid="6" languageid="1"/>
+    <productstatushistory productstatushistoryid="1" productid="1" categoryid="1" isactive="1" timestamp="2015-08-03 00:00:00" productstatusid="6" languageid="1"/>
+    <productstatushistory productstatushistoryid="2" productid="2" categoryid="1" isactive="1" timestamp="2015-08-03 00:00:00" productstatusid="6" languageid="1"/>
+    <productstatushistory productstatushistoryid="3" productid="3" categoryid="1" isactive="1" timestamp="2015-12-02 23:59:59" productstatusid="6" languageid="3"/>
+    <productstatushistory productstatushistoryid="4" productid="4" categoryid="1" isactive="1" timestamp="2015-08-03 00:00:00" productstatusid="6" languageid="1"/>
+    <productstatushistory productstatushistoryid="5" productid="5" categoryid="1" isactive="1" timestamp="2014-08-03 00:00:00" productstatusid="6" languageid="1"/>
+    <productstatushistory productstatushistoryid="6" productid="2" categoryid="1" isactive="1" timestamp="2013-08-03 00:00:00" productstatusid="6" languageid="1"/>
+    <productstatushistory productstatushistoryid="8" productid="8" categoryid="1" isactive="1" timestamp="2015-03-03 00:00:00" productstatusid="6" languageid="1"/>
+    <productstatushistory productstatushistoryid="9" productid="9" categoryid="1" isactive="1" timestamp="2013-11-03 00:00:00" productstatusid="6" languageid="1"/>
 
     <parametervalue valueid="1" value="Value 1" isactive="1"/>
     <parametervalue valueid="2" value="Value 2" isactive="1"/>

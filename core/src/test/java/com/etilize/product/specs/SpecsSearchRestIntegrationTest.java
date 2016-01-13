@@ -92,10 +92,12 @@ public class SpecsSearchRestIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void shouldFindAllProductIdByDateRangeAndTemplateId() throws Exception {
-        mockMvc.perform(get("/specs/search/findProductItemByDateRangeAndTemplateId") //
-        .param("startDate", "2015-08-03") //
-        .param("endDate", "2015-12-02") //
-        .param("templateId", "1")) //
+        mockMvc.perform(
+                get("/specs/search/findProductItemByDateRangeCategoryIdAndTemplateId") //
+                .param("startDate", "2015-08-03") //
+                .param("endDate", "2015-12-02") //
+                .param("categoryId", "1") //
+                .param("templateId", "1")) //
         .andExpect(status().isOk()) //
         .andExpect(jsonPath("$.[*]", hasSize(2))) //
         .andExpect(jsonPath("$.[0].productId", is(1))) //
