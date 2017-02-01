@@ -66,8 +66,7 @@ public class SpecsSearchRestIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void shouldReturnEmptyResultWhenNothingFoundByIdAndVariation()
-            throws Exception {
+    public void shouldReturnEmptyResultWhenNothingFound() throws Exception {
         mockMvc.perform(
                 get("/specs/search/findAllByProductIdsAndParameterIdWithPublishedStatus") //
                 .param("productIds", "1,2,3") //
