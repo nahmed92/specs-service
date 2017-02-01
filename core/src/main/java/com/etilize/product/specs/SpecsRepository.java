@@ -30,7 +30,10 @@ package com.etilize.product.specs;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +53,10 @@ import com.google.common.collect.Maps;
 @Repository
 public class SpecsRepository {
 
-    private static final String SQL = "SELECT p.productid, pl.languageid, TRIM( CONCAT_WS(' ', pv.value, pp.unitvalue)) as value " //
-            + "FROM product p, productlanguage pl, productparameter pp, parametervalue pv " //
+    private static final String SQL = "SELECT p.productid, pl.languageid, "//
+            + "TRIM( CONCAT_WS(' ', pv.value, pp.unitvalue)) as value " //
+            + "FROM product p, productlanguage pl, " //
+            + "productparameter pp, parametervalue pv " //
             + "WHERE p.productid in (:productIds) " //
             + "AND p.productid = pl.productid " //
             + "AND pl.productid = pp.productid " //
@@ -64,10 +69,52 @@ public class SpecsRepository {
             + "AND p.isactive = 1 " //
             + "AND pl.isactive = 1 " //
             + "AND pp.isactive = 1 " //
-            + "AND pv.isactive =1";
+            + "AND pv.isactive = 1";
+
+    private static final String PRODUCTS_BY_DATE_RANGE_AND_TEMPLATEID_SQL = "SELECT "
+            + "p.productid,pp.parameterid," //
+            + "pp.exceptionCodeId, pp.setnumber, pv.value , pp.unitvalue " //
+            + "FROM Product p " //
+            + "INNER JOIN Productparameter pp ON  p.productId = pp.productId " //
+            + "INNER JOIN Parametervalue pv ON pp.valueId = pv.valueId " //
+            + "INNER JOIN Category c ON p.categoryId = c.categoryId " //
+            + "INNER JOIN Template t ON c.categoryId = t.categoryId " //
+            + "INNER JOIN Templateheader th ON t.templateid = th.templateid " //
+            + "INNER JOIN Header h ON th.headerid = h.headerid " //
+            + "INNER JOIN Templateattribute ta ON th.templateheaderid = ta.templateheaderid " //
+            + "INNER JOIN Attribute a ON ta.attributeid = a.attributeid " //
+            + "INNER JOIN Atrparamdef atr ON (a.attributeid = atr.attributeid " //
+            + "AND atr.atrparamdefid = ta.atrparamdefid) " //
+            + "INNER JOIN Atrparamdefcomp atrc ON atr.atrparamdefid = atrc.atrparamdefid " //
+            + "INNER JOIN Parameter param ON atrc.parameterid = param.parameterid " //
+            + "INNER JOIN Categoryparameter cp ON (c.categoryid = cp.categoryid "
+            + "and  cp.parameterid = param.parameterid) " //
+            + "INNER JOIN ( " //
+            + "SELECT prod.productid, " //
+            + "psh.timestamp timestamp FROM product prod " //
+            + "INNER JOIN Productmarket prod_market " //
+            + "ON prod.productid = prod_market.productid " //
+            + "INNER JOIN Productstatushistory psh " //
+            + "ON prod.productid = psh.productid " //
+            + "WHERE psh.languageid = 1 " // 1 English
+            + "AND prod_market.marketid = 1 " // 1 US
+            + "AND psh.productstatusid = 6 " // 6 publish
+            + "AND psh.isactive = 1 " //
+            + "GROUP by prod.productid,psh.timestamp " //
+            + "HAVING psh.timestamp between :fromDate " //
+            + "AND :toDate ) pId " //
+            + "ON p.productid = pId.productid " //
+            + "WHERE  t.templateId = :templateId " //
+            + "AND p.isactive = 1 " //
+            + "AND pp.isactive = 1 " //
+            + "AND pv.isactive = 1 ";
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    private static final String START_DATE_TIMESTAMP = "00:00:00";
+
+    private static final String END_DATE_TIMESTAMP = "23:59:59";
 
     /**
      * Returns Specs for the given productId for the given parameterId having the
@@ -102,4 +149,63 @@ public class SpecsRepository {
             }
         });
     }
+
+    /**
+     * Returns List of ProductItem w.r.t provided Date Range and TemplateId
+     *
+     * @param Date startDate
+     * @param Date endDate
+     * @param TemplateId
+     * @return List<ProductItem>
+     */
+    public List<ProductItem> findProductItemByDateRangeAndTemplateId(
+            final String startDate, final String endDate, final Integer templateId) { //
+        final Map<String, Object> params = Maps.newHashMap();
+
+        // Format Date with timestamp
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date fromDate = null;
+        Date toDate = null;
+        try {
+            fromDate = format.parse(startDate + " " + START_DATE_TIMESTAMP);
+            toDate = format.parse(endDate + " " + END_DATE_TIMESTAMP);
+        } catch (final ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
+
+        params.put("fromDate", fromDate);
+        params.put("toDate", toDate);
+        params.put("templateId", templateId);
+
+        return jdbcTemplate.query(PRODUCTS_BY_DATE_RANGE_AND_TEMPLATEID_SQL, params,
+                new ResultSetExtractor<List<ProductItem>>() {
+
+                    @Override
+                    public List<ProductItem> extractData(final ResultSet rs)
+                            throws SQLException {
+                        final Map<Integer, ProductItem> productMap = Maps.newHashMap();
+
+                        while (rs.next()) {
+                            final int productId = rs.getInt(1); // NOSONAR
+                            final int parameterId = rs.getInt(2); // NOSONAR
+                            final int exceptionCodeId = rs.getInt(3); // NOSONAR
+                            final int setNumber = rs.getInt(4); // NOSONAR
+                            final String value = rs.getString(5); // NOSONAR
+                            final String unit = rs.getString(6); // NOSONAR
+
+                            final ExceptionCode exceptioncode = ExceptionCode.valueOf(exceptionCodeId);
+
+                            if (!productMap.containsKey(productId)) {
+                                productMap.put(productId, new ProductItem(productId));
+                            }
+                            productMap.get(productId).addParameter(
+                                    new ProductParameter(parameterId, exceptioncode,
+                                            setNumber, unit, value));
+
+                        }
+                        return new ArrayList<>(productMap.values());
+                    }
+                });
+    }
+
 }

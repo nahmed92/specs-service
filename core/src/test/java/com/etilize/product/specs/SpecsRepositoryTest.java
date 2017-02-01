@@ -66,4 +66,56 @@ public class SpecsRepositoryTest extends AbstractIntegrationTest {
         }
     }
 
+    @Test
+    public void shouldFindProductItemByDateRangeAndTemplateId() {
+
+        final List<ProductItem> productItems = repo.findProductItemByDateRangeAndTemplateId(
+                "2015-08-03", "2015-12-02", 1);
+
+        assertThat(productItems, is(notNullValue()));
+        assertThat(productItems, hasSize(2));
+
+        for (final ProductItem productItem : productItems) {
+            assertThat(productItems, is(notNullValue()));
+            assertThat(productItems, hasSize(2));
+            if (productItem.getProductParameters().size() == 4) {
+                assertThat(productItem.getProductId(), is(1));
+            } else {
+                assertThat(productItem.getProductId(), is(2));
+            }
+
+            for (final ProductParameter parameter : productItem.getProductParameters()) {
+
+                if (parameter.getParameterId() == 111) {
+                    assertThat(parameter.getExceptionCode(), is(ExceptionCode.INCOMPLETE));
+                    if (parameter.getSetNumber() == 0) {
+                        assertThat(parameter.getUnit(), is("unit1"));
+                        assertThat(parameter.getValue(), is("Value 1"));
+                    } else if (parameter.getSetNumber() == 1) {
+                        assertThat(parameter.getUnit(), is(""));
+                        assertThat(parameter.getValue(), is("Value 2"));
+                    }
+
+                } else if (parameter.getParameterId() == 112) {
+                    assertThat(parameter.getExceptionCode(), is(ExceptionCode.COMPLETE));
+                    assertThat(parameter.getSetNumber(), is(2));
+                    assertThat(parameter.getUnit(), is("unit3"));
+                    assertThat(parameter.getValue(), is("Value 3"));
+
+                } else if (parameter.getParameterId() == 113) {
+                    assertThat(parameter.getExceptionCode(), is(ExceptionCode.INCOMPLETE));
+                    assertThat(parameter.getSetNumber(), is(3));
+                    assertThat(parameter.getUnit(), is("unit4"));
+                    assertThat(parameter.getValue(), is("Value 4"));
+
+                } else if (parameter.getParameterId() == 115) {
+                    assertThat(parameter.getExceptionCode(), is(ExceptionCode.INCOMPLETE));
+                    assertThat(parameter.getSetNumber(), is(1));
+                    assertThat(parameter.getUnit(), is("unit2"));
+                    assertThat(parameter.getValue(), is("Value 2"));
+                }
+
+            }
+        }
+    }
 }
