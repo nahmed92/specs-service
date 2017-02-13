@@ -31,7 +31,10 @@ package com.etilize.product.specs;
 import static com.etilize.product.specs.SpecsLinks.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -50,6 +53,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.etilize.commons.controller.AbstractRepositoryRestController;
 
+/**
+ * Controller which houses methods related to search of {@link Specs}
+ *
+ * @author Faisal Feroz
+ *
+ */
 @RequestMapping(value = BASE_MAPPING_SEARCH)
 @RestResource(rel = REL_SEARCH, path = BASE_MAPPING_SEARCH)
 @RestController
@@ -57,8 +66,14 @@ import com.etilize.commons.controller.AbstractRepositoryRestController;
 @RepositoryRestController
 public class SpecsSearchController extends AbstractRepositoryRestController {
 
+    /**
+     * request argument for product ids
+     */
     static final String PARAM_PRODUCT_IDS = "productIds";
 
+    /**
+     * rest request argument for parameter id
+     */
     static final String PARAM_PARAMETER_ID = "parameterId";
 
     static final String PARAM_TEMPLATE_ID = "templateId";
@@ -67,10 +82,20 @@ public class SpecsSearchController extends AbstractRepositoryRestController {
 
     static final String PARAM_TO_DATE = "endDate";
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private final SpecsRepository repo;
 
     private final SpecsLinks specsLinks;
 
+    /**
+     * Constructor
+     *
+     * @param repo - {@link SpecsRepository} instance
+     * @param specsLinks - {@link SpecsLinks} instance
+     * @param pagedResourcesAssembler - {@link PagedResourcesAssembler} for returning
+     *        paged resources
+     */
     @Autowired
     public SpecsSearchController(final SpecsRepository repo, final SpecsLinks specsLinks,
             final PagedResourcesAssembler<Object> pagedResourcesAssembler) {
@@ -120,10 +145,13 @@ public class SpecsSearchController extends AbstractRepositoryRestController {
         Assert.notEmpty(productIds);
         Assert.notNull(parameterId);
 
+        final long time = System.nanoTime();
         final List<Specs> specs = repo.findAllByProductIdAndParameterIdWithPublishedStatus(
                 productIds, parameterId);
+        logger.debug("Query Time {} ms",
+                TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - time));
 
-        return new ResponseEntity<List<Specs>>(specs, HttpStatus.OK);
+        return new ResponseEntity<>(specs, HttpStatus.OK);
     }
 
     /**

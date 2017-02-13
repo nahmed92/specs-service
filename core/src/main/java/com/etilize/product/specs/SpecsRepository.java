@@ -42,6 +42,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 /**
@@ -52,6 +53,8 @@ import com.google.common.collect.Maps;
  */
 @Repository
 public class SpecsRepository {
+
+    private static final int BATCH_SIZE = 100;
 
     private static final String SQL = "SELECT p.productid, pl.languageid, "//
             + "TRIM( CONCAT_WS(' ', pv.value, pp.unitvalue)) as value " //
@@ -126,28 +129,34 @@ public class SpecsRepository {
      */
     public List<Specs> findAllByProductIdAndParameterIdWithPublishedStatus(
             final List<Integer> productIds, final Integer parameterId) {
+        final List<Specs> specs = Lists.newArrayList();
         final Map<String, Object> params = Maps.newHashMap();
-        params.put("productIds", productIds);
-        params.put("parameterId", parameterId);
+        for (final List<Integer> pIds : Lists.partition(productIds, BATCH_SIZE)) {
+            params.put("productIds", pIds);
+            params.put("parameterId", parameterId);
 
-        return jdbcTemplate.query(SQL, params, new ResultSetExtractor<List<Specs>>() {
+            specs.addAll(jdbcTemplate.query(SQL, params,
+                    new ResultSetExtractor<List<Specs>>() {
 
-            @Override
-            public List<Specs> extractData(final ResultSet rs) throws SQLException {
-                final Map<Integer, Specs> specs = Maps.newHashMap();
-                while (rs.next()) {
-                    final int productId = rs.getInt(1); // NOSONAR
-                    final int languageId = rs.getInt(2); // NOSONAR
-                    final String value = rs.getString(3); // NOSONAR
+                        @Override
+                        public List<Specs> extractData(final ResultSet rs)
+                                throws SQLException {
+                            final Map<Integer, Specs> specs = Maps.newHashMap();
+                            while (rs.next()) {
+                                final int productId = rs.getInt(1); // NOSONAR
+                                final int languageId = rs.getInt(2); // NOSONAR
+                                final String value = rs.getString(3); // NOSONAR
 
-                    if (!specs.containsKey(productId)) {
-                        specs.put(productId, new Specs(productId, languageId));
-                    }
-                    specs.get(productId).addValue(value);
-                }
-                return new ArrayList<>(specs.values());
-            }
-        });
+                                if (!specs.containsKey(productId)) {
+                                    specs.put(productId, new Specs(productId, languageId));
+                                }
+                                specs.get(productId).addValue(value);
+                            }
+                            return new ArrayList<>(specs.values());
+                        }
+                    }));
+        }
+        return specs;
     }
 
     /**
