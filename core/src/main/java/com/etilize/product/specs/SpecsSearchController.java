@@ -184,4 +184,18 @@ public class SpecsSearchController extends AbstractRepositoryRestController {
 
         return new ResponseEntity<List<ProductItem>>(productItems, HttpStatus.OK);
     }
+
+
+
+    @RequestMapping(value = "/findProductAndValues", method = RequestMethod.GET)
+    public ResponseEntity<List<ProductItem>> findAllByProductIdsAndtemplate() {
+
+
+        final long time = System.nanoTime();
+        final List<ProductItem> specs = repo.findProductAndValues();
+        logger.debug("Query Time {} ms",
+                TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - time));
+
+        return new ResponseEntity<>(specs, HttpStatus.OK);
+    }
 }
